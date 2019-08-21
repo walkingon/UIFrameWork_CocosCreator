@@ -21,7 +21,7 @@ export class ResManager{
      * @param url 资源路径
      * @param resType 资源类型
      * @param completeCallback 完成回调，回传参数列表 (error, resource)
-     * @param processCallback 进度回调，回传参数列表 (completedCount:number, totalCount:number, item:any)
+     * @param processCallback 进度回调，回传参数列表 (completedCount, totalCount, item)
      */
     loadRes(url:string, resType:typeof cc.Asset, completeCallback:Function = null, processCallback:Function = null) {
         cc.loader.loadRes(url, resType, (completedCount:number, totalCount:number, item:any)=>{
