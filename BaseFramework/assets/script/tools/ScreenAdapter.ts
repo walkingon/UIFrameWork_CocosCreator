@@ -29,11 +29,11 @@ export class ScreenAdapter{
     }
 
     private init() {
-        console.log('ScreenAdapter.init()');
+        cc.log('ScreenAdapter.init()');
         this.frameSize = cc.view.getFrameSize()
-        console.log('frameSize', this.frameSize);
+        cc.log('frameSize', this.frameSize);
         this.screenSize = cc.view.getVisibleSizeInPixel()
-        console.log('screenSize', this.screenSize);
+        cc.log('screenSize', this.screenSize);
     }
 
     /**分辨率适配 */
@@ -63,7 +63,7 @@ export class ScreenAdapter{
             canvasComp.fitHeight = fitHeight
             canvasComp.fitWidth = fitWidth
         }
-        console.log('fitWidth:' + fitWidth + ' fitHeight:' + fitHeight)
+        cc.log('fitWidth:' + fitWidth + ' fitHeight:' + fitHeight)
         
         if(this.isPortrait){
             let ret = this.screenSize.height/this.designSize.height
@@ -76,8 +76,8 @@ export class ScreenAdapter{
             this.ret = ret
             this.offsetValue = (this.designSize.width * ret - this.designSize.width)/2
         }
-        console.log('ret ' + this.ret)
-        console.log('offsetValue ' + this.offsetValue)
+        cc.log('ret ' + this.ret)
+        cc.log('offsetValue ' + this.offsetValue)
     }
 
     /**屏幕宽高比 */
@@ -108,7 +108,7 @@ export class ScreenAdapter{
     /**适配左侧元素,用于横版游戏 */
     fitLeft(leftNode:cc.Node){
         if(this.isPortrait){
-            console.error('不适用此方法');
+            cc.error('不适用此方法');
             return
         }
         if(this.getScreenRatio() > this.getDesignRatio()){
@@ -121,7 +121,7 @@ export class ScreenAdapter{
     /**适配右侧元素,用于横版游戏 */
     fitRight(rightNode:cc.Node){
         if(this.isPortrait){
-            console.error('不适用此方法');
+            cc.error('不适用此方法');
             return
         }
         if(this.getScreenRatio() > this.getDesignRatio()){
@@ -132,7 +132,7 @@ export class ScreenAdapter{
     /**适配顶部元素，用于竖版游戏 */
     fitTop(topNode:cc.Node){
         if(!this.isPortrait){
-            console.error('不适用此方法');
+            cc.error('不适用此方法');
             return
         }
         if(this.getScreenRatio() < this.getDesignRatio()){
@@ -145,7 +145,7 @@ export class ScreenAdapter{
     /**适配底部元素，用于竖版游戏 */
     fitBot(botNode:cc.Node){
         if(!this.isPortrait){
-            console.error('不适用此方法');
+            cc.error('不适用此方法');
             return
         }
         if(this.getScreenRatio() < this.getDesignRatio()){

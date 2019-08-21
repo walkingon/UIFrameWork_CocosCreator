@@ -76,7 +76,7 @@ export class Tools{
      * @param resUrl 
      */
     static getRemoteRawUrl(resUrl) {
-        console.log(wxDownloader.REMOTE_SERVER_ROOT + '/' + Tools.getRawUrl(resUrl))
+        cc.log(wxDownloader.REMOTE_SERVER_ROOT + '/' + Tools.getRawUrl(resUrl))
         return wxDownloader.REMOTE_SERVER_ROOT + '/' + Tools.getRawUrl(resUrl);
     }
 
@@ -190,9 +190,9 @@ export class Tools{
     /**格式时间转时间戳ms, "2017-06-16 12:21:12"*/
     static getTimeNumber(timeStr:string){
         timeStr = timeStr.replace(/-/g, '/') //IOS系统不支持2017-01-01格式的时间 用正则替换2017-01-01日期格式为2017/01/01
-        console.log(timeStr)
+        cc.log(timeStr)
         let timestamp2 = Date.parse(timeStr);
-        console.log(timestamp2)
+        cc.log(timestamp2)
         return timestamp2
     }
 

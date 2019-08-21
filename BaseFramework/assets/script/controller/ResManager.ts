@@ -18,14 +18,22 @@ export class ResManager{
 
     /**
      * 加载资源
-     * @param url 
-     * @param resType 
-     * @param completeCallback 
+     * @param url 资源路径
+     * @param resType 资源类型
+     * @param completeCallback 完成回调，回传参数列表 (error, resource)
+     * @param processCallback 进度回调，回传参数列表 (completedCount:number, totalCount:number, item:any)
      */
-    loadRes(url, resType, completeCallback) {
-        cc.loader.loadRes(url, resType, (error, resource) => {
+    loadRes(url:string, resType:typeof cc.Asset, completeCallback:Function = null, processCallback:Function = null) {
+        cc.loader.loadRes(url, resType, (completedCount:number, totalCount:number, item:any)=>{
+            //进度回调
+            if(processCallback){
+                processCallback(completedCount, totalCount, item)
+            }
+        }, (error, resource) => {
+            //完成回调
             if (error) {
-                console.warn('ResManager loadRes Error');
+                cc.error('ResManager loadRes Error', error);
+                return
             }
             if (completeCallback) {
                 completeCallback(error, resource);
@@ -41,7 +49,7 @@ export class ResManager{
                     this.resLoadNumMap.set(resPath, num + 1)
                 }
             }
-            //console.log('loaded.', this.resLoadNumMap.toArray())
+            //cc.log('loaded.', this.resLoadNumMap.toArray())
         });
     }
 
@@ -62,7 +70,7 @@ export class ResManager{
                 }
             }
         }
-        //console.log('released.', this.resLoadNumMap.toArray())
+        //cc.log('released.', this.resLoadNumMap.toArray())
      }
 
     /**
@@ -70,7 +78,7 @@ export class ResManager{
      * @param  {function} callback
      */
     cleanAllAssets(callback) {
-        console.log('微信平台清理小游戏缓存');
+        cc.log('微信平台清理小游戏缓存');
         
         if (wx.getFileSystemManager) {
             var fs = wx.getFileSystemManager();
@@ -91,7 +99,7 @@ export class ResManager{
      */
     cleanDir (fs, dir, callback) {
         if(CC_DEBUG){
-            console.log('cleanDir ' + dir);
+            cc.log('cleanDir ' + dir);
         }
         
         fs.readdir({
@@ -109,10 +117,10 @@ export class ResManager{
                                     fs.unlink({
                                         filePath: path,
                                         success: !CC_DEBUG ? null : () => {
-                                            console.log('Removed local file ' + path + ' successfully!');
+                                            cc.log('Removed local file ' + path + ' successfully!');
                                         },
                                         fail: !CC_DEBUG ? null : (res) => {
-                                            console.warn('Failed to remove file(' + path + '): ' + res ? res.errMsg : 'unknown error');
+                                            cc.warn('Failed to remove file(' + path + '): ' + res ? res.errMsg : 'unknown error');
                                         },
                                         complete: () => {
                                             if (++handledCount >= totalCount && callback) callback();
@@ -137,7 +145,7 @@ export class ResManager{
                 }
             },
             fail: () => {
-                console.warn('fail to readdir:' + dir);
+                cc.warn('fail to readdir:' + dir);
                 if (callback) callback();
             }
         });
@@ -145,10 +153,10 @@ export class ResManager{
 
     /**微信退出 */
     restart () {
-        console.log('微信退出');
+        cc.log('微信退出');
         wx.exitMiniProgram({
             complete: () => {
-                console.log('exit complete');
+                cc.log('exit complete');
             }
         });
     }

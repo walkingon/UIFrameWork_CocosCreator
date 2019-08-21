@@ -66,7 +66,7 @@ export default class SingleClickButton extends cc.Component {
         let needReturn = false
         SingleClickButton.singleClickButtons.foreach((k, v)=>{
             if(k != self.uuid && v.isClicked){
-                console.warn('已有其他按钮点击，拦截点击事件!');
+                cc.warn('已有其他按钮点击，拦截点击事件!');
                 needReturn = true
                 return
             }
@@ -99,7 +99,7 @@ export default class SingleClickButton extends cc.Component {
     /**打印按钮点击标记 */
     logSingleBtnFlag(){
         SingleClickButton.singleClickButtons.foreach((k, v)=>{
-            console.log(k + ' isClicked:' + v.isClicked);
+            cc.log(k + ' isClicked:' + v.isClicked);
         })
     }
 

@@ -89,7 +89,7 @@ export abstract class ViewBase extends cc.Component{
                 let self = this
                 ResManager.getInstance().loadRes('prefab/common/BlackBg', cc.Prefab, (err, res)=>{
                     if(err){
-                        console.error(err);
+                        cc.error(err);
                         return
                     }
                     let node = cc.instantiate(res) as cc.Node

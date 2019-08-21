@@ -13,7 +13,9 @@ export interface OpenViewOptions{
     /**打开完成回调 */
     FinishedCbk?:Function,
     /**播放动画 */
-    PlayAnim?:boolean
+    PlayAnim?:boolean,
+    /**加载进度回调 */
+    ProcessCbk?:Function
 }
 
 /**关闭界面参数 */
@@ -126,12 +128,12 @@ export interface CloseViewOptions{
             for(let oldView of self.viewList){
                 if(!oldView.isPaused){
                     oldView.pause()
-                    console.log(oldView.name + ' onPause');
+                    cc.log(oldView.name + ' onPause');
                 }
                 if(view.isFullScreen){
                     if(!oldView.isHide){
                         oldView.hide()
-                        console.log(oldView.name + ' onHide');
+                        cc.log(oldView.name + ' onHide');
                     }
                 }
             }
@@ -150,7 +152,7 @@ export interface CloseViewOptions{
                 view.showBlackBg(false)
             }
             view.onOpen(options.CustomData)
-            console.log(view.name + ' onOpen');
+            cc.log(view.name + ' onOpen');
             
             
             self.turnOnScreenClick()
@@ -171,13 +173,13 @@ export interface CloseViewOptions{
             let mView = this.viewList[i]
             if(mView instanceof options.View){
                 if(mView.isFullScreen || options.PlayAnim == false){
-                    console.log(mView.name + ' onClose');
+                    cc.log(mView.name + ' onClose');
                     mView.close()
                     //ResManager.getInstance().releaseRes(options.View.prafabPath)
                 }else{
                     mView.showBlackBg(false)
                     mView.playCloseAnim(function(){
-                        console.log(mView.name + ' onClose');
+                        cc.log(mView.name + ' onClose');
                         mView.close()
                         //ResManager.getInstance().releaseRes(options.View.prafabPath)
                     })
@@ -192,7 +194,7 @@ export interface CloseViewOptions{
             let mView = this.viewList[i]
             if(mView.isPaused){
                 mView.resume()
-                console.log(mView.name + ' onResume');
+                cc.log(mView.name + ' onResume');
                 break
             }
         }
@@ -202,7 +204,7 @@ export interface CloseViewOptions{
             let mView = this.viewList[i]
             if(mView.isHide){
                 mView.show()
-                console.log(mView.name + ' onShow');
+                cc.log(mView.name + ' onShow');
             }
             if(mView.isFullScreen){
                 break
@@ -253,7 +255,7 @@ export interface CloseViewOptions{
         let self = this
         ResManager.getInstance().loadRes('prefab/common/Tip', cc.Prefab, (err, res)=>{
             if(err){
-                console.log(err);
+                cc.log(err);
                 return
             }
             let node = cc.instantiate(res) as cc.Node
